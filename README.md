@@ -21,6 +21,9 @@ ChargeSentinel, elektrikli araç şarj istasyonlarının güvenlik ve izleme sis
 ### 3D Charging Scene
 ![3D Scene](./media/image%20copy.png)
 
+### Dashboard Overview
+![Dashboard Overview](./media/image%20copy%202.png)
+
 ## 📸 Sistem Görüntüleri
 
 <details>

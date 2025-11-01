@@ -1,9 +1,10 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useRef, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, useProgress, Html } from '@react-three/drei';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
+import { Expand } from 'lucide-react';
 import './ChargingStation.css';
 
 // Loading component
@@ -79,7 +80,7 @@ function TeslaModel() {
   }, [obj]);
 
   return (
-    <group scale={0.8} position={[-0.5, 0, -6]} rotation={[0, Math.PI / 2 + Math.PI, 0]}>
+    <group scale={0.8} position={[0.5, 0, 0]} rotation={[0, Math.PI / 2 + Math.PI, 0]}>
       <primitive object={obj} />
     </group>
   );
@@ -137,21 +138,83 @@ function ChargeStationModel() {
   }, [obj]);
 
   return (
-    <group scale={0.008} position={[0, 0, -8]} rotation={[0, Math.PI / 2, 0]}>
+    <group scale={0.008} position={[0, 0, -1.3]} rotation={[0, Math.PI / 2, 0]}>
       <primitive object={obj} />
     </group>
   );
 }
 
 
+// Camera Controller Component
+function CameraController({ onInit }: { onInit: (controls: any) => void }) {
+  const controlsRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (controlsRef.current) {
+      onInit(controlsRef.current);
+    }
+  }, [onInit]);
+
+  return (
+    <OrbitControls 
+      ref={controlsRef}
+      enableZoom={true}
+      enablePan={true}
+      enableRotate={true}
+      minDistance={2}
+      maxDistance={15}
+      maxPolarAngle={Math.PI / 2.1}
+      autoRotate={false}
+      autoRotateSpeed={0}
+      enableDamping={true}
+      dampingFactor={0.05}
+      target={[0.25, 0.5, -0.65]}
+    />
+  );
+}
+
 export default function ChargingStation() {
+  const controlsRef = useRef<any>(null);
+
+  // Araç ve şarj istasyonunun orta noktasını hesapla
+  const centerX = (0.5 + 0) / 2; // 0.25
+  const centerZ = (0 + -1.3) / 2; // -0.65
+
+  const resetCamera = () => {
+    if (controlsRef.current) {
+      // Target'ı ortala
+      controlsRef.current.target.set(centerX, 0.5, centerZ);
+      // Kamerayı arabanın önünden göster (Z ekseninde negatif taraftan)
+      controlsRef.current.object.position.set(centerX - 2, 3, centerZ - 5);
+      controlsRef.current.update();
+    }
+  };
+
+  const handleControlsInit = (controls: any) => {
+    controlsRef.current = controls;
+    // İlk yüklemede otomatik ortala
+    setTimeout(() => {
+      resetCamera();
+    }, 500);
+  };
+
   return (
     <div className="charging-station">
       <div className="station-header">
         <h3>🔌 Tesla Model 3 & Şarj İstasyonu</h3>
-        <div className="charging-badge">
-          <div className="charging-icon">⚡</div>
-          <span>Şarj Ediliyor</span>
+        <div className="charging-badge-container">
+          <div className="charging-badge">
+            <div className="charging-icon">⚡</div>
+            <span>Şarj Ediliyor</span>
+          </div>
+          <button 
+            className="reset-camera-btn" 
+            onClick={resetCamera}
+            title="Tam Bakış (Ortala)"
+          >
+            <Expand size={16} />
+            <span>Tam Bakış</span>
+          </button>
         </div>
       </div>
       
@@ -159,7 +222,7 @@ export default function ChargingStation() {
         <Canvas 
           shadows 
           camera={{ 
-            position: [2, 3, -5], 
+            position: [centerX - 2, 3, centerZ - 5], 
             fov: 65,
             near: 0.1,
             far: 1000
@@ -187,6 +250,50 @@ export default function ChargingStation() {
             <ChargeStationModel />
           </Suspense>
           
+          {/* Sol Çim Kenarı */}
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[-8, -0.03, 0]} receiveShadow>
+            <planeGeometry args={[4, 20]} />
+            <meshStandardMaterial 
+              color="#2d5016"
+              metalness={0.0}
+              roughness={1}
+            />
+          </mesh>
+          {/* Sol Çim Yüksekliği */}
+          {[...Array(15)].map((_, i) => (
+            <mesh 
+              key={`grass-left-${i}`}
+              position={[-7 + (i % 3) * 0.3, 0.1, -9 + Math.floor(i / 3) * 1.5]} 
+              castShadow 
+              receiveShadow
+            >
+              <boxGeometry args={[0.2, 0.3, 0.2]} />
+              <meshStandardMaterial color="#4a7c1f" roughness={0.9} />
+            </mesh>
+          ))}
+          
+          {/* Sağ Çim Kenarı */}
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[8, -0.03, 0]} receiveShadow>
+            <planeGeometry args={[4, 20]} />
+            <meshStandardMaterial 
+              color="#2d5016"
+              metalness={0.0}
+              roughness={1}
+            />
+          </mesh>
+          {/* Sağ Çim Yüksekliği */}
+          {[...Array(15)].map((_, i) => (
+            <mesh 
+              key={`grass-right-${i}`}
+              position={[7 + (i % 3) * 0.3, 0.1, -9 + Math.floor(i / 3) * 1.5]} 
+              castShadow 
+              receiveShadow
+            >
+              <boxGeometry args={[0.2, 0.3, 0.2]} />
+              <meshStandardMaterial color="#4a7c1f" roughness={0.9} />
+            </mesh>
+          ))}
+          
           {/* Asfalt Zemin */}
           <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.05, 0]} receiveShadow>
             <planeGeometry args={[20, 20]} />
@@ -207,19 +314,7 @@ export default function ChargingStation() {
             />
           </mesh>
           
-          <OrbitControls 
-            enableZoom={true}
-            enablePan={true}
-            enableRotate={true}
-            minDistance={2}
-            maxDistance={15}
-            maxPolarAngle={Math.PI / 2.1}
-            autoRotate={false}
-            autoRotateSpeed={0}
-            enableDamping={true}
-            dampingFactor={0.05}
-            target={[-0.75, 0.5, -8]}
-          />
+          <CameraController onInit={handleControlsInit} />
           
           <Environment preset="city" />
         </Canvas>
