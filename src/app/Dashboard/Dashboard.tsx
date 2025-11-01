@@ -78,51 +78,59 @@ export default function Dashboard() {
 
           <div className="activity-list">
             <div className="activity-item danger">
-              <div className="activity-icon">
-                <AlertTriangle size={18} />
+              <div className="activity-icon-wrapper danger-icon">
+                <AlertTriangle size={22} />
               </div>
               <div className="activity-content">
-                <h4>Anormal Ağ Trafiği Tespit Edildi</h4>
+                <div className="activity-header">
+                  <h4>Anormal Ağ Trafiği Tespit Edildi</h4>
+                  <span className="activity-time">5 dakika önce</span>
+                </div>
                 <p>Şarj İstasyonu #3 - Yüksek paket oranı tespit edildi</p>
-                <span className="activity-time">5 dakika önce</span>
+                <div className="activity-badge danger">Kritik</div>
               </div>
-              <div className="activity-badge danger">Kritik</div>
             </div>
 
             <div className="activity-item warning">
-              <div className="activity-icon">
-                <Shield size={18} />
+              <div className="activity-icon-wrapper warning-icon">
+                <Shield size={22} />
               </div>
               <div className="activity-content">
-                <h4>Potansiyel MITM Saldırısı Engellendi</h4>
+                <div className="activity-header">
+                  <h4>Potansiyel MITM Saldırısı Engellendi</h4>
+                  <span className="activity-time">15 dakika önce</span>
+                </div>
                 <p>Şarj İstasyonu #7 - Şüpheli bağlantı denemesi</p>
-                <span className="activity-time">15 dakika önce</span>
+                <div className="activity-badge warning">Uyarı</div>
               </div>
-              <div className="activity-badge warning">Uyarı</div>
             </div>
 
             <div className="activity-item success">
-              <div className="activity-icon">
-                <CheckCircle size={18} />
+              <div className="activity-icon-wrapper success-icon">
+                <CheckCircle size={22} />
               </div>
               <div className="activity-content">
-                <h4>AI Modeli Güncellendi</h4>
+                <div className="activity-header">
+                  <h4>AI Modeli Güncellendi</h4>
+                  <span className="activity-time">1 saat önce</span>
+                </div>
                 <p>Yeni tehditlere karşı model eğitimi tamamlandı</p>
-                <span className="activity-time">1 saat önce</span>
+                <div className="activity-badge success">Başarılı</div>
               </div>
-              <div className="activity-badge success">Başarılı</div>
             </div>
 
             <div className="activity-item info">
-              <div className="activity-icon">
-                <Activity size={18} />
+              <div className="activity-icon-wrapper info-icon">
+                <Activity size={22} />
               </div>
               <div className="activity-content">
-                <h4>Yeni Şarj İstasyonu Bağlandı</h4>
+                <div className="activity-header">
+                  <h4>Yeni Şarj İstasyonu Bağlandı</h4>
+                  <span className="activity-time">2 saat önce</span>
+                </div>
                 <p>Şarj İstasyonu #9 sisteme eklendi</p>
-                <span className="activity-time">2 saat önce</span>
+                <div className="activity-badge info">Bilgi</div>
               </div>
-              <div className="activity-badge info">Bilgi</div>
             </div>
           </div>
         </div>

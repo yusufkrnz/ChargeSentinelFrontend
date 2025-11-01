@@ -11,6 +11,7 @@ import {
   Eye,
   Trash2,
   Search,
+  Activity,
 } from 'lucide-react';
 import { 
   loadIncidents, 
@@ -116,27 +117,43 @@ export default function Incidents() {
             <h1>🚨 Güvenlik Olayları</h1>
             <p>Tespit edilen anomali ve güvenlik olayları</p>
           </div>
-          <div className="header-actions">
-            <button className="export-btn" onClick={handleExportForAI}>
-              <Download size={18} />
-              AI Eğitimi İçin Export
-            </button>
-          </div>
-        </div>
-
-        {/* İstatistikler */}
-        <div className="incidents-stats">
-          <div className="stat-card">
-            <div className="stat-value">{stats.total}</div>
-            <div className="stat-label">Toplam Olay</div>
-          </div>
-          <div className="stat-card critical">
-            <div className="stat-value">{stats.critical}</div>
-            <div className="stat-label">Kritik</div>
-          </div>
-          <div className="stat-card open">
-            <div className="stat-value">{stats.open}</div>
-            <div className="stat-label">Açık</div>
+          <div className="header-section-with-stats">
+            {/* 📊 İstatistikler - Header yanında */}
+            <div className="stats-grid-header">
+              <div className="stat-card">
+                <div className="stat-icon" style={{ background: '#1A36B0' }}>
+                  <Activity size={20} />
+                </div>
+                <div className="stat-content">
+                  <h3>Toplam Olay</h3>
+                  <p className="stat-number">{stats.total}</p>
+                </div>
+              </div>
+              <div className="stat-card critical">
+                <div className="stat-icon" style={{ background: '#dc2626' }}>
+                  <AlertTriangle size={20} />
+                </div>
+                <div className="stat-content">
+                  <h3>Kritik</h3>
+                  <p className="stat-number">{stats.critical}</p>
+                </div>
+              </div>
+              <div className="stat-card open">
+                <div className="stat-icon" style={{ background: '#f59e0b' }}>
+                  <AlertCircle size={20} />
+                </div>
+                <div className="stat-content">
+                  <h3>Açık</h3>
+                  <p className="stat-number">{stats.open}</p>
+                </div>
+              </div>
+            </div>
+            <div className="header-actions">
+              <button className="export-btn" onClick={handleExportForAI}>
+                <Download size={18} />
+                AI Eğitimi İçin Export
+              </button>
+            </div>
           </div>
         </div>
 

@@ -21,6 +21,50 @@ ChargeSentinel, elektrikli araç şarj istasyonlarının güvenlik ve izleme sis
 ### 3D Charging Scene
 ![3D Scene](./media/image%20copy.png)
 
+## 📸 Sistem Görüntüleri
+
+<details>
+<summary><b>Ekran Görüntüsü 1</b> (Genel Bakış)</summary>
+
+![Sistem Görüntüsü 1](./media/Ekran%20Resmi%202025-11-01%2013.17.11.png)
+</details>
+
+<details>
+<summary><b>Ekran Görüntüsü 2</b></summary>
+
+![Sistem Görüntüsü 2](./media/Ekran%20Resmi%202025-11-01%2013.17.23.png)
+</details>
+
+<details>
+<summary><b>Ekran Görüntüsü 3</b></summary>
+
+![Sistem Görüntüsü 3](./media/Ekran%20Resmi%202025-11-01%2013.17.37.png)
+</details>
+
+<details>
+<summary><b>Ekran Görüntüsü 4</b></summary>
+
+![Sistem Görüntüsü 4](./media/Ekran%20Resmi%202025-11-01%2013.17.57.png)
+</details>
+
+<details>
+<summary><b>Ekran Görüntüsü 5</b></summary>
+
+![Sistem Görüntüsü 5](./media/Ekran%20Resmi%202025-11-01%2013.18.26.png)
+</details>
+
+<details>
+<summary><b>Ekran Görüntüsü 6</b></summary>
+
+![Sistem Görüntüsü 6](./media/Ekran%20Resmi%202025-11-01%2013.18.35.png)
+</details>
+
+<details>
+<summary><b>Ekran Görüntüsü 7</b></summary>
+
+![Sistem Görüntüsü 7](./media/Ekran%20Resmi%202025-11-01%2013.18.59.png)
+</details>
+
 ## 🚀 Kurulum
 
 ```bash
