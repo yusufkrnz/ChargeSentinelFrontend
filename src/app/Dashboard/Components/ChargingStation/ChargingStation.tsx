@@ -20,6 +20,36 @@ function Loader() {
   );
 }
 
+// Tesla Fallback Model
+function TeslaFallback() {
+  return (
+    <group position={[0.5, 0, 0]} rotation={[0, Math.PI / 2 + Math.PI, 0]}>
+      {/* Araba gövdesi */}
+      <mesh position={[0, 0.5, 0]} castShadow receiveShadow>
+        <boxGeometry args={[2, 1, 4]} />
+        <meshStandardMaterial color="#ffffff" metalness={0.1} roughness={0.15} />
+      </mesh>
+      {/* Araba camı */}
+      <mesh position={[0, 1, 0.5]} castShadow>
+        <boxGeometry args={[1.8, 0.5, 1]} />
+        <meshStandardMaterial color="#d0e8ff" transparent opacity={0.3} />
+      </mesh>
+      {/* Lastikler */}
+      {[
+        { x: -1.1, z: 1.3 },
+        { x: 1.1, z: 1.3 },
+        { x: -1.1, z: -1.3 },
+        { x: 1.1, z: -1.3 },
+      ].map((pos, i) => (
+        <mesh key={i} position={[pos.x, 0.2, pos.z]} castShadow>
+          <cylinderGeometry args={[0.3, 0.3, 0.4]} />
+          <meshStandardMaterial color="#000000" roughness={0.95} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
 // Tesla Model
 function TeslaModel() {
   const obj = useLoader(OBJLoader, '/media/Tesla Model.obj');
@@ -86,6 +116,34 @@ function TeslaModel() {
   );
 }
 
+// Charge Station Fallback Model
+function ChargeStationFallback() {
+  return (
+    <group position={[0, 0, -1.3]} rotation={[0, Math.PI / 2, 0]}>
+      {/* Şarj istasyonu gövdesi */}
+      <mesh position={[0, 1, 0]} castShadow receiveShadow>
+        <boxGeometry args={[0.8, 2, 0.6]} />
+        <meshStandardMaterial color="#ffffff" metalness={0.5} roughness={0.3} />
+      </mesh>
+      {/* Ekran */}
+      <mesh position={[0, 1.5, 0.31]} castShadow>
+        <boxGeometry args={[0.6, 0.4, 0.05]} />
+        <meshStandardMaterial color="#2d3436" metalness={0.9} roughness={0.1} />
+      </mesh>
+      {/* Şarj kablosu */}
+      <mesh position={[0, 0.5, 1]} rotation={[0, 0, Math.PI / 6]} castShadow>
+        <cylinderGeometry args={[0.05, 0.05, 1.5]} />
+        <meshStandardMaterial color="#1a1a1a" metalness={0.3} roughness={0.7} />
+      </mesh>
+      {/* Şarj ucu */}
+      <mesh position={[0.3, 0.3, 1.8]} castShadow>
+        <boxGeometry args={[0.15, 0.15, 0.15]} />
+        <meshStandardMaterial color="#1A36B0" metalness={0.6} roughness={0.4} />
+      </mesh>
+    </group>
+  );
+}
+
 // Charge Station Model
 function ChargeStationModel() {
   const obj = useLoader(OBJLoader, '/media/Elrctric Vehicle Charger.obj');
@@ -144,6 +202,32 @@ function ChargeStationModel() {
   );
 }
 
+
+// Error Boundary Component
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback: React.ReactNode },
+  { hasError: boolean; error?: Error }
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: any) {
+    console.warn('Model yükleme hatası:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <>{this.props.fallback}</>;
+    }
+    return <>{this.props.children}</>;
+  }
+}
 
 // Camera Controller Component
 function CameraController({ onInit }: { onInit: (controls: any) => void }) {
@@ -246,8 +330,12 @@ export default function ChargingStation() {
           />
           
           <Suspense fallback={<Loader />}>
-            <TeslaModel />
-            <ChargeStationModel />
+            <ErrorBoundary fallback={<TeslaFallback />}>
+              <TeslaModel />
+            </ErrorBoundary>
+            <ErrorBoundary fallback={<ChargeStationFallback />}>
+              <ChargeStationModel />
+            </ErrorBoundary>
           </Suspense>
           
           {/* Sol Çim Kenarı */}
