@@ -14,55 +14,52 @@ export default function Dashboard() {
             <h1>Hoş Geldiniz, Admin! 👋</h1>
             <p>ChargeSentinel Güvenlik İzleme Merkezi</p>
           </div>
-          <div className="status-badge">
-            <div className="status-indicator active"></div>
-            <span>Sistem Aktif</span>
-          </div>
-        </div>
+          <div className="header-section-with-stats">
+            {/* 📊 İstatistikler - Header yanında */}
+            <div className="stats-grid-header">
+              <div className="dashboard-card active-card">
+                <div className="card-icon green">
+                  <Activity size={20} />
+                </div>
+                <div className="card-content">
+                  <h3>Aktif Bağlantılar</h3>
+                  <p className="card-number">8</p>
+                </div>
+              </div>
 
-        {/* Stats Grid */}
-        <div className="dashboard-grid">
-          <div className="dashboard-card active-card">
-            <div className="card-icon green">
-              <Activity size={24} />
-            </div>
-            <div className="card-content">
-              <h3>Aktif Bağlantılar</h3>
-              <p className="card-number">8</p>
-              <span className="card-subtitle">Şarj istasyonu çevrimiçi</span>
-            </div>
-          </div>
+              <div className="dashboard-card threat-card">
+                <div className="card-icon red">
+                  <AlertTriangle size={20} />
+                </div>
+                <div className="card-content">
+                  <h3>Tespit Edilen Tehditler</h3>
+                  <p className="card-number">3</p>
+                </div>
+              </div>
 
-          <div className="dashboard-card threat-card">
-            <div className="card-icon red">
-              <AlertTriangle size={24} />
-            </div>
-            <div className="card-content">
-              <h3>Tespit Edilen Tehditler</h3>
-              <p className="card-number">3</p>
-              <span className="card-subtitle">Son 24 saat</span>
-            </div>
-          </div>
+              <div className="dashboard-card protected-card">
+                <div className="card-icon blue">
+                  <Shield size={20} />
+                </div>
+                <div className="card-content">
+                  <h3>Engellenen Saldırılar</h3>
+                  <p className="card-number">127</p>
+                </div>
+              </div>
 
-          <div className="dashboard-card protected-card">
-            <div className="card-icon blue">
-              <Shield size={24} />
+              <div className="dashboard-card success-card">
+                <div className="card-icon success">
+                  <CheckCircle size={20} />
+                </div>
+                <div className="card-content">
+                  <h3>AI Model Doğruluğu</h3>
+                  <p className="card-number">96.8%</p>
+                </div>
+              </div>
             </div>
-            <div className="card-content">
-              <h3>Engellenen Saldırılar</h3>
-              <p className="card-number">127</p>
-              <span className="card-subtitle">Toplam bu ay</span>
-            </div>
-          </div>
-
-          <div className="dashboard-card success-card">
-            <div className="card-icon success">
-              <CheckCircle size={24} />
-            </div>
-            <div className="card-content">
-              <h3>AI Model Doğruluğu</h3>
-              <p className="card-number">96.8%</p>
-              <span className="card-subtitle">Tespit başarı oranı</span>
+            <div className="status-badge">
+              <div className="status-indicator active"></div>
+              <span>Sistem Aktif</span>
             </div>
           </div>
         </div>

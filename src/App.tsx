@@ -2,6 +2,11 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './app/Login/Login';
 import Dashboard from './app/Dashboard/Dashboard';
+import LiveMonitoring from './app/LiveMonitoring/LiveMonitoring';
+import NetworkTraffic from './app/NetworkTraffic/NetworkTraffic';
+import AIAnalytics from './app/AIAnalytics/AIAnalytics';
+import Incidents from './app/Incidents/Incidents';
+import Settings from './app/Settings/Settings';
 import './App.css';
 
 // Protected Route Component
@@ -23,20 +28,11 @@ function App() {
             </ProtectedRoute>
           } 
         />
-        {/* Placeholder routes for menu items - will be implemented later */}
         <Route 
           path="/live-monitoring" 
           element={
             <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } 
-        />
-        <Route 
-          path="/threat-detection" 
-          element={
-            <ProtectedRoute>
-              <Dashboard />
+              <LiveMonitoring />
             </ProtectedRoute>
           } 
         />
@@ -44,15 +40,15 @@ function App() {
           path="/network-traffic" 
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <NetworkTraffic />
             </ProtectedRoute>
           } 
         />
         <Route 
-          path="/ai-training" 
+          path="/ai-analytics" 
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <AIAnalytics />
             </ProtectedRoute>
           } 
         />
@@ -60,23 +56,7 @@ function App() {
           path="/incidents" 
           element={
             <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } 
-        />
-        <Route 
-          path="/analytics" 
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } 
-        />
-        <Route 
-          path="/ocpp-logs" 
-          element={
-            <ProtectedRoute>
-              <Dashboard />
+              <Incidents />
             </ProtectedRoute>
           } 
         />
@@ -84,7 +64,7 @@ function App() {
           path="/settings" 
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <Settings />
             </ProtectedRoute>
           } 
         />

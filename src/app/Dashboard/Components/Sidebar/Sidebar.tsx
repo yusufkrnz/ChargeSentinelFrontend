@@ -4,10 +4,8 @@ import {
   Activity, 
   Shield, 
   Network, 
-  Brain,
   AlertTriangle,
   BarChart3,
-  FileText,
   Settings,
   User,
   ChevronLeft,
@@ -36,40 +34,22 @@ export default function Sidebar() {
       color: '#10b981'
     },
     { 
-      icon: <Shield size={20} />, 
-      label: 'Tehdit Algılama', 
-      path: '/threat-detection',
-      color: '#ef4444'
-    },
-    { 
       icon: <Network size={20} />, 
       label: 'Ağ Trafiği', 
       path: '/network-traffic',
       color: '#8b5cf6'
     },
     { 
-      icon: <Brain size={20} />, 
-      label: 'AI Eğitimi', 
-      path: '/ai-training',
-      color: '#f59e0b'
+      icon: <BarChart3 size={20} />, 
+      label: 'AI & Analitik', 
+      path: '/ai-analytics',
+      color: '#0ea5e9'
     },
     { 
       icon: <AlertTriangle size={20} />, 
       label: 'Olaylar', 
       path: '/incidents',
       color: '#dc2626'
-    },
-    { 
-      icon: <BarChart3 size={20} />, 
-      label: 'Analitik', 
-      path: '/analytics',
-      color: '#0ea5e9'
-    },
-    { 
-      icon: <FileText size={20} />, 
-      label: 'OCPP Logları', 
-      path: '/ocpp-logs',
-      color: '#64748b'
     },
     { 
       icon: <Settings size={20} />, 

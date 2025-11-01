@@ -23,6 +23,19 @@
   margin-bottom: 2rem;
 }
 
+.header-section-with-stats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.stats-grid-header {
+  display: flex;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+}
+
 .content-header h1 {
   font-size: 32px;
   font-weight: 700;
@@ -83,14 +96,16 @@
 
 .dashboard-card {
   background: #ffffff;
-  border-radius: 16px;
-  padding: 1.75rem;
+  border-radius: 6px;
+  padding: 0.625rem 0.75rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   border: 1px solid #e2e8f0;
   transition: all 0.3s;
   display: flex;
-  gap: 1.25rem;
-  align-items: flex-start;
+  gap: 0.625rem;
+  align-items: center;
+  min-width: 0;
+  max-width: 180px;
 }
 
 .dashboard-card:hover {
@@ -99,9 +114,9 @@
 }
 
 .card-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,22 +149,22 @@
 
 .card-content {
   flex: 1;
+  min-width: 0;
 }
 
 .card-content h3 {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 0.625rem;
+  font-weight: 500;
   color: #64748b;
-  margin: 0 0 0.5rem 0;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  margin: 0 0 0.25rem 0;
+  line-height: 1.2;
 }
 
 .card-number {
-  font-size: 32px;
+  font-size: 1.125rem;
   font-weight: 700;
   color: #1e293b;
-  margin: 0.25rem 0;
+  margin: 0;
   line-height: 1;
 }
 

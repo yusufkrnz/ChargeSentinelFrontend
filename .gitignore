@@ -29,3 +29,5 @@ dist-ssr
 media/*.obj
 public/media/*.obj
 public/media/*.blend
+BACKEND_INTEGRATION.md
+DIGITAL_FOOTPRINT_DESIGN.md

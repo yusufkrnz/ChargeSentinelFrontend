@@ -25,106 +25,54 @@ function TeslaModel() {
 
   React.useEffect(() => {
     if (obj) {
-      console.log('🚗 Tesla Model yüklendi!', obj);
+      console.log(' Tesla Model yüklendi!', obj);
       obj.traverse((child: THREE.Object3D) => {
         if (child instanceof THREE.Mesh) {
           const name = child.name.toLowerCase();
           
-          // 🪟 CAMLAR (Glass, Window, Windshield) - 1. ÖNCELİK
-          if (name.includes('glass') || name.includes('window') || name.includes('windshield')) {
-            child.material = new THREE.MeshPhysicalMaterial({
-              color: '#b3e0ff',
-              metalness: 0,
-              roughness: 0.05,
-              transparent: true,
-              opacity: 0.2,
-              transmission: 0.95,
-              ior: 1.52,
-              clearcoat: 1.0,
-              clearcoatRoughness: 0.1,
-            });
-          }
-          // 🛞 LASTİKLER (Tire, Tyre) - 2. ÖNCELİK - KESİN SİYAH!
-          else if (name.includes('tire') || name.includes('tyre')) {
+          // 🛞 LASTİKLER - GENİŞ EŞLEŞTİRME (Tire, Tyre, Wheel, Rubber, vb.) - SİYAH
+          const isTire = name.includes('tire') || 
+                        name.includes('tyre') || 
+                        name.includes('wheel') || 
+                        name.includes('rubber') ||
+                        (name.includes('black') && !name.includes('glass')) ||
+                        name.includes('sidewall');
+          
+          if (isTire) {
+            console.log('LASTİK BULUNDU:', child.name);
             child.material = new THREE.MeshStandardMaterial({
-              color: '#000000', // SİYAH lastik - kesin!
+              color: '#000000', // SİYAH lastik
               metalness: 0.0,
               roughness: 0.95, // Mat, kauçuk gibi
             });
           }
-          // ⚪ JANTLAR (Rim, Wheel hub/spoke/center/alloy) - 3. ÖNCELİK
-          else if ((name.includes('rim') && !name.includes('fender') && !name.includes('tire') && !name.includes('body')) ||
-                   name === 'wheel_rim' || name === 'rim_wheel' ||
-                   (name.includes('wheel') && (name.includes('hub') || name.includes('spoke') || name.includes('center') || name.includes('alloy')))) {
-            child.material = new THREE.MeshStandardMaterial({
-              color: '#c0c0c0', // Gümüş jant
-              metalness: 0.95,
-              roughness: 0.15, // Parlak, metalik
+          // 🪟 CAMLAR (Glass, Window, Windshield) - ÇOK FLU, İÇERİ GÖRÜNMESİN
+          else if (name.includes('glass') || name.includes('window') || name.includes('windshield')) {
+            console.log('🪟 CAM BULUNDU:', child.name);
+            child.material = new THREE.MeshPhysicalMaterial({
+              color: '#d0e8ff', // Daha açık, buzlu mavi ton
+              metalness: 0,
+              roughness: 0.3, // Biraz mat (daha flu görünüm)
+              transparent: true,
+              opacity: 0.08, // ÇOK FLU - içeri görünmesin
+              transmission: 0.4, // Düşük transmission = içeri görünmez
+              ior: 1.52, // Cam kırılma indeksi
+              clearcoat: 1.0,
+              clearcoatRoughness: 0.2,
+              thickness: 0.5, // Cam kalınlığı efekti
             });
           }
-          // 🚗 DIŞ KAPUTLAR (Body, Hood, Door, etc.) - 4. ÖNCELİK - KESİN BEYAZ!
-          else if (name.includes('body') || name.includes('hood') || name.includes('door') || 
-              name.includes('trunk') || name.includes('fender') || name.includes('bumper') ||
-              name.includes('roof') || name.includes('quarter') || name.includes('panel') ||
-              name.includes('chassis') || name.includes('frame')) {
-            child.material = new THREE.MeshStandardMaterial({
-              color: '#ffffff', // BEYAZ kaputlar - kesin!
-              metalness: 0.9,
-              roughness: 0.1, // Parlak, lake boya gibi
-            });
-          }
-          // 💡 Farlar (Headlight, Taillight)
-          else if (name.includes('headlight') || name.includes('taillight') || name.includes('light')) {
-            child.material = new THREE.MeshStandardMaterial({
-              color: '#ffffff',
-              metalness: 0.8,
-              roughness: 0.2,
-              emissive: '#ffffaa',
-              emissiveIntensity: 0.3,
-            });
-          }
-          // 🪞 Aynalar (Mirror)
-          else if (name.includes('mirror')) {
-            child.material = new THREE.MeshStandardMaterial({
-              color: '#ffffff',
-              metalness: 0.85,
-              roughness: 0.15,
-            });
-          }
-          // 🔧 Diğer metalik parçalar (Grille, Handle, etc.)
-          else if (name.includes('grille') || name.includes('handle') || name.includes('badge')) {
-            child.material = new THREE.MeshStandardMaterial({
-              color: '#e8e8e8', // Açık gri metalik
-              metalness: 0.9,
-              roughness: 0.2,
-            });
-          }
-          // 🔴 Stop lambaları, sinyaller
-          else if (name.includes('brake') || name.includes('signal') || name.includes('turn')) {
-            child.material = new THREE.MeshStandardMaterial({
-              color: '#ff0000',
-              metalness: 0.3,
-              roughness: 0.7,
-              emissive: '#ff0000',
-              emissiveIntensity: 0.5,
-            });
-          }
-          // ⚪ Varsayılan (diğer her şey BEYAZ gövde - kesinlikle beyaz!)
+          // GERİ KALAN HER ŞEY - BEYAZ
           else {
             child.material = new THREE.MeshStandardMaterial({
-              color: '#ffffff', // Beyaz - kesinlikle beyaz!
-              metalness: 0.9,
-              roughness: 0.1,
+              color: '#ffffff', // Beyaz
+              metalness: 0.1, // Düşük metalness = gümüş değil, beyaz boya
+              roughness: 0.15, // Biraz parlak ama çok metalik değil
             });
           }
           
           child.castShadow = true;
           child.receiveShadow = true;
-          
-          // Debug: Tüm mesh isimlerini yazdır (ilk yüklemede)
-          if (child.name && child.name.length > 0) {
-            console.log('🔍 Mesh:', child.name, '→ Renk:', (child.material as THREE.MeshStandardMaterial).color.getHexString());
-          }
         }
       });
     }
@@ -143,7 +91,7 @@ function ChargeStationModel() {
 
   React.useEffect(() => {
     if (obj) {
-      console.log('🔌 Şarj İstasyonu yüklendi!');
+      console.log(' Şarj İstasyonu yüklendi!');
       obj.traverse((child: THREE.Object3D) => {
         if (child instanceof THREE.Mesh) {
           const childName = child.name.toLowerCase();
